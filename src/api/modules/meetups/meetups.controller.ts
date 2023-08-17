@@ -1,10 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller, Get, Post, Body, Patch, Param,
+  Delete, HttpCode, HttpStatus, UseGuards
+} from '@nestjs/common';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
 import { MeetupsService } from './meetups.service';
 import { CreateMeetupDto } from './dto/create-meetup.dto';
 import { UpdateMeetupDto } from './dto/update-meetup.dto';
 import { MeetupResponse } from './response/meetups.response';
+import { JwtAuthGuard } from '../auth/guard/jwt.guard';
+import { UserEmail } from 'src/api/decorators/user-email.decorator';
 
 @ApiTags('meetups')
 @Controller('meetups')
@@ -20,13 +25,16 @@ export class MeetupsController {
     return this.meetupsService.create(createMeetupDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.meetupsService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string, @UserEmail() email: string) {
+    console.log(email);
     return this.meetupsService.findOne(+id);
   }
 

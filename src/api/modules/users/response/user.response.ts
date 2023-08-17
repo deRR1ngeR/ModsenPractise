@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { $Enums, User } from '@prisma/client';
 
-type UserResponseType = Omit<User, 'password'>
+type UserResponseType = Omit<User, 'password'> & Partial<Pick<User, 'password'>>
 
 export class UserResponse implements UserResponseType {
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { $Enums } from '@prisma/client';
+import { $Enums, User } from '@prisma/client';
 
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -24,7 +24,15 @@ export class UserRepository {
         })
     }
 
-    async find(email: string): Promise<UserResponse> {
+    async findByEmailWithPassword(email: string): Promise<User> {
+        return await this.db.user.findUnique({
+            where: {
+                email: email
+            }
+        })
+    }
+
+    async findByEmail(email: string): Promise<UserResponse> {
         return await this.db.user.findUnique({
             where: {
                 email: email
