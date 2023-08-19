@@ -7,7 +7,6 @@ import { genSaltSync, hashSync } from 'bcryptjs';
 import { UserResponse } from './response/user.response';
 import { UserRepository } from './users.repository';
 import { CreateUserDto } from './dto/create-user.dto';
-import { JwtService } from '@nestjs/jwt';
 
 
 
@@ -15,8 +14,7 @@ import { JwtService } from '@nestjs/jwt';
 export class UsersService {
 
     constructor(
-        private readonly userRepository: UserRepository,
-        private readonly jwtService: JwtService) {
+        private readonly userRepository: UserRepository) {
 
     }
 
@@ -37,15 +35,6 @@ export class UsersService {
         return await this.userRepository.create(newUser);
     }
 
-    async login(email: string) {
-        const payload = { email };
-
-        return {
-            acces_token: await this.jwtService.signAsync(payload)
-
-        };
-    }
-
     async findUserByEmailWithPassword(email: string): Promise<User> {
         return await this.userRepository.findByEmailWithPassword(email);
     }
@@ -53,4 +42,5 @@ export class UsersService {
     async findUserByEmail(email: string): Promise<UserResponse> {
         return await this.userRepository.findByEmail(email);
     }
+
 }
