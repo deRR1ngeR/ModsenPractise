@@ -9,7 +9,9 @@ import { CreateMeetupDto } from './dto/create-meetup.dto';
 import { UpdateMeetupDto } from './dto/update-meetup.dto';
 import { MeetupResponse } from './response/meetups.response';
 import { JwtAuthGuard } from '../auth/guard/jwt.guard';
-import { UserEmail } from 'src/api/decorators/user-email.decorator';
+import { Roles } from 'src/api/decorators/roles.decorator';
+import { Role } from '@prisma/client';
+import { RolesGuard } from '../auth/guard/roles.guard';
 
 @ApiTags('meetups')
 @Controller('meetups')
@@ -25,7 +27,8 @@ export class MeetupsController {
     return this.meetupsService.create(createMeetupDto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ORGANIZER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get()
   findAll() {
     return this.meetupsService.findAll();
@@ -33,8 +36,7 @@ export class MeetupsController {
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  findOne(@Param('id') id: string, @UserEmail() email: string) {
-    console.log(email);
+  findOne(@Param('id') id: string) {
     return this.meetupsService.findOne(+id);
   }
 

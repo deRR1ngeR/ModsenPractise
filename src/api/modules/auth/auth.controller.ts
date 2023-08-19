@@ -1,9 +1,10 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { AuthDto } from './dto/user-registration.dto';
 import { UsersService } from '../users/users.service';
 import { AuthService } from './auth.service';
+import { LocalAuthGuard } from './guard/local.guard';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -20,6 +21,7 @@ export class AuthController {
         return await this.userService.createUser(dto);
     }
 
+    @UseGuards(LocalAuthGuard)
     @UsePipes(new ValidationPipe())
     @HttpCode(HttpStatus.ACCEPTED)
     @Post('login')
