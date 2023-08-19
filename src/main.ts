@@ -2,6 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 
+import * as cookieParser from 'cookie-parser'
+
 import { AppModule } from './api/app.module';
 
 async function bootstrap() {
@@ -10,6 +12,8 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   app.useGlobalPipes(new ValidationPipe());
+
+  app.use(cookieParser());
 
   const config = new DocumentBuilder()
     .setTitle('ModsenTestApp')

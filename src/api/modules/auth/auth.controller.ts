@@ -1,32 +1,40 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Req, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
+import { User } from '@prisma/client';
+
 import { AuthDto } from './dto/user-registration.dto';
-import { UsersService } from '../users/users.service';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guard/local.guard';
+import { RequestWithUser } from './interfaces/request-with-user.interface';
+import { RefreshGuard } from './guard/refresh.guard';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
 
     constructor(
-        private readonly userService: UsersService,
         private readonly authService: AuthService) { }
 
     @UsePipes(new ValidationPipe())
     @HttpCode(HttpStatus.CREATED)
     @Post('register')
     async register(@Body() dto: AuthDto) {
-        return await this.userService.createUser(dto);
+        return await this.authService.registration(dto);
     }
 
     @UseGuards(LocalAuthGuard)
     @UsePipes(new ValidationPipe())
     @HttpCode(HttpStatus.ACCEPTED)
     @Post('login')
-    async login(@Body() { email, password }: AuthDto) {
-        const user = await this.authService.validateUser(email, password);
-        return this.userService.login(user.email)
+    async login(@Req() req: RequestWithUser) {
+        return this.authService.login(req)
     }
+
+    @UseGuards(RefreshGuard)
+    @Post('refresh')
+    async refresh(@Req() req: RequestWithUser) {
+        return this.authService.refresh(req);
+    }
+
 }

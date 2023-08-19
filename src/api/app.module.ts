@@ -5,8 +5,9 @@ import { MeetupsModule } from './modules/meetups/meetups.module';
 import { PrismaModule } from './modules/prisma/prisma.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
+import { SessionsModule } from './modules/sessions/sessions.module';
 
 @Module({
-    imports: [ConfigModule.forRoot(), MeetupsModule, PrismaModule, AuthModule, UsersModule]
+    imports: [ConfigModule.forRoot(), MeetupsModule, PrismaModule, AuthModule, UsersModule, SessionsModule]
 })
 export class AppModule { }
