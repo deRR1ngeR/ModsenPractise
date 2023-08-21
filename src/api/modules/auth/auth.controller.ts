@@ -1,8 +1,6 @@
 import { Body, Controller, HttpCode, HttpStatus, Post, Req, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { User } from '@prisma/client';
-
 import { AuthDto } from './dto/user-registration.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guard/local.guard';

@@ -18,19 +18,18 @@ export class RefreshStrategy extends PassportStrategy(Strategy, 'refresh') {
         super({
             jwtFromRequest: ExtractJwt.fromExtractors([
                 (req: Request) => {
-                    console.log(req?.cookies?.refreshToken)
                     return req?.cookies?.refreshToken;
 
                 }
             ]),
             ignoreExpiration: true,
-            secretOrKey: configService.get('JWT_REFRESH_TOKEN')
+            secretOrKey: configService.get('JWT_REFRESH_TOKEN'),
+            passReqToCallback: true,
         });
     }
 
     async validate(req: Request, { email }: ITokenPayload): Promise<UserResponse> {
         const refreshToken = req?.cookies?.refreshToken;
-        console.log(refreshToken, email)
         return this.authService.getUserIfRefreshTokenMatches(email, refreshToken)
     }
 }
