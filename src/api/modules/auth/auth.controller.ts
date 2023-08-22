@@ -4,8 +4,9 @@ import { ApiTags } from '@nestjs/swagger';
 import { AuthDto } from './dto/user-registration.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guard/local.guard';
-import { RequestWithUser } from './interfaces/request-with-user.interface';
+import RequestWithUser from './interfaces/request-with-user.interface';
 import { RefreshGuard } from './guard/refresh.guard';
+import { LoginResponse } from './response/login.response';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -25,7 +26,7 @@ export class AuthController {
     @UsePipes(new ValidationPipe())
     @HttpCode(HttpStatus.ACCEPTED)
     @Post('login')
-    async login(@Req() req: RequestWithUser) {
+    async login(@Req() req: RequestWithUser): Promise<LoginResponse> {
         return this.authService.login(req)
     }
 

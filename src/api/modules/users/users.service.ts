@@ -19,9 +19,7 @@ export class UsersService {
     }
 
     async createUser(dto: CreateUserDto): Promise<UserResponse> {
-
-        const isUserExist = this.findUserByEmail(dto.email);
-        console.log(isUserExist);
+        const isUserExist = await this.findUserByEmail(dto.email);
         if (isUserExist)
             throw new HttpException('User with such email already exists', HttpStatus.UNAUTHORIZED)
 

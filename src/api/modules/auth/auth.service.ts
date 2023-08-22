@@ -12,7 +12,7 @@ import ITokenPayload from './interfaces/token-payload.interface';
 import { IRefreshTokenCookie } from './interfaces/refresh-token-cookie.interface';
 import { serialize } from 'cookie';
 import { UserResponse } from '../users/response/user.response';
-import { RequestWithUser } from './interfaces/request-with-user.interface';
+import RequestWithUser from './interfaces/request-with-user.interface';
 import { LoginResponse } from './response/login.response';
 import { AccessTokenResponse } from './response/access-token.response';
 
@@ -94,8 +94,6 @@ export class AuthService {
         const user = await this.userService.findUserByEmail(email);
 
         const refreshTokenFromDB = await this.sessionService.getRefreshToken(user.id);
-        console.log(refreshTokenFromDB === refreshToken)
-        console.log(refreshToken)
 
         if (refreshToken !== refreshTokenFromDB) {
             throw new ForbiddenException('Invalid refresh token');
