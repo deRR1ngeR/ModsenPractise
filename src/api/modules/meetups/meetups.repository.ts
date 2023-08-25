@@ -4,7 +4,7 @@ import { CreateMeetupDto } from './dto/create-meetup.dto';
 import { MeetupResponse } from './response/meetups.response';
 import { PrismaService } from '../prisma/prisma.service';
 import { UpdateMeetupDto } from './dto/update-meetup.dto';
-import { PaginateFunction, PaginatedResult, paginator } from 'src/api/pagination/interface/paginator.interface';
+import { PaginateFunction, PaginatedResult, paginator } from '../../pagination/interface/paginator.interface';
 import { QueryMeetups } from './dto/query-meetups.dto';
 
 @Injectable()
@@ -54,14 +54,19 @@ export class MeetupsRepository {
     }
 
     async update(id: number, dto: UpdateMeetupDto): Promise<MeetupResponse> {
-        return await this.db.meetup.update({
-            where: {
-                id: id
-            },
-            data: {
-                ...dto
-            }
-        })
+        try {
+            return await this.db.meetup.update({
+                where: {
+                    id: id
+                },
+                data: {
+                    ...dto
+                }
+            })
+        }
+        catch (err) {
+            return
+        }
     }
 
     async delete(id: number): Promise<MeetupResponse> {

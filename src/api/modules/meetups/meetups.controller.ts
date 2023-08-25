@@ -9,10 +9,10 @@ import { CreateMeetupDto } from './dto/create-meetup.dto';
 import { UpdateMeetupDto } from './dto/update-meetup.dto';
 import { MeetupResponse } from './response/meetups.response';
 import { JwtAuthGuard } from '../auth/guard/jwt.guard';
-import { Roles } from 'src/api/decorators/roles.decorator';
+import { Roles } from '../../decorators/roles.decorator';
 import { Role } from '@prisma/client';
 import { RolesGuard } from '../auth/guard/roles.guard';
-import { PaginatedResult } from 'src/api/pagination/interface/paginator.interface';
+import { PaginatedResult } from '../../pagination/interface/paginator.interface';
 import RequestWithUser from '../auth/interfaces/request-with-user.interface';
 import { QueryMeetups } from './dto/query-meetups.dto';
 
@@ -29,7 +29,6 @@ export class MeetupsController {
   @HttpCode(HttpStatus.CREATED)
   @Post()
   create(@Body() createMeetupDto: CreateMeetupDto, @Req() req: RequestWithUser): Promise<MeetupResponse> {
-    console.log(req.user.id)
     return this.meetupsService.create(createMeetupDto, req.user.id);
   }
 
