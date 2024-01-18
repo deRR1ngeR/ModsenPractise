@@ -1,35 +1,11 @@
-version: '2.15'
-
-services: 
-  main:
-    container_name: main
-    build:
-      context: .
-    env_file:
-    - .env
-    volumes:
-    - .:/app
-    - /app/node_modules
-    ports:
-    - 5000:5000
-    - 9229:9229
-    command: npm run start:dev
-    depends_on: 
-    - postgres
+services:
+ db:
+    container_name: db
+    image: postgres:14
     restart: always
-
-  postgres:
-    container_name: postgres
-    image: postgres:15.2
-    env_file:
-      - .env
-    environment: 
-      PG_DATA: /var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: meetups-db
     ports:
-      - 5432:5432 
-    volumes: 
-      - pgdata:/var/lib/postgresql/data
-    restart: always
-
-volumes: 
-  pgdata:
+      - "5433:5432"

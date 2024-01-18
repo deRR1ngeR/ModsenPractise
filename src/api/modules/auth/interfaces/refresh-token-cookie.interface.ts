@@ -1,4 +1,4 @@
 export interface IRefreshTokenCookie {
-    refreshToken: string;
-    refreshTokenCookie: string;
+  refreshToken: string;
+  refreshTokenCookie: string;
 }

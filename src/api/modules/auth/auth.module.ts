@@ -12,14 +12,14 @@ import { SessionsModule } from '../sessions/sessions.module';
 import { RefreshStrategy } from './strategy/refresh.strategy';
 
 @Module({
-    imports: [
-        UsersModule,
-        PassportModule,
-        ConfigModule,
-        JwtModule.register({}),
-        SessionsModule
-    ],
-    providers: [AuthService, JwtStrategy, LocalStrategy, RefreshStrategy],
-    controllers: [AuthController]
+  imports: [
+    UsersModule,
+    PassportModule,
+    ConfigModule,
+    JwtModule.register({}),
+    SessionsModule,
+  ],
+  providers: [AuthService, JwtStrategy, LocalStrategy, RefreshStrategy],
+  controllers: [AuthController],
 })
-export class AuthModule { }
+export class AuthModule {}

@@ -8,35 +8,35 @@ import { UserResponse } from './response/user.response';
 
 @Injectable()
 export class UserRepository {
-    constructor(private readonly db: PrismaService) { }
+  constructor(private readonly db: PrismaService) {}
 
-    async create(dto: CreateUserDto): Promise<UserResponse> {
-        return this.db.user.create({
-            data: {
-                ...dto,
-                role: $Enums.Role.USER
-            },
-            select: {
-                id: true,
-                email: true,
-                role: true
-            }
-        })
-    }
+  async create(dto: CreateUserDto): Promise<UserResponse> {
+    return this.db.user.create({
+      data: {
+        ...dto,
+        role: $Enums.Role.USER,
+      },
+      select: {
+        id: true,
+        email: true,
+        role: true,
+      },
+    });
+  }
 
-    async findByEmailWithPassword(email: string): Promise<User> {
-        return await this.db.user.findUnique({
-            where: {
-                email: email
-            }
-        })
-    }
+  async findByEmailWithPassword(email: string): Promise<User> {
+    return await this.db.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+  }
 
-    async findByEmail(email: string): Promise<UserResponse> {
-        return await this.db.user.findUnique({
-            where: {
-                email: email
-            }
-        });
-    }
+  async findByEmail(email: string): Promise<UserResponse> {
+    return await this.db.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+  }
 }

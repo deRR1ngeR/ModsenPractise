@@ -10,7 +10,7 @@ import { QueryMeetups } from './dto/query-meetups.dto';
 
 @Injectable()
 export class MeetupsService {
-  constructor(private readonly meetupsRepository: MeetupsRepository) { }
+  constructor(private readonly meetupsRepository: MeetupsRepository) {}
 
   async create(dto: CreateMeetupDto, creator: number): Promise<MeetupResponse> {
     return await this.meetupsRepository.create(dto, creator);
@@ -19,30 +19,43 @@ export class MeetupsService {
   async findAll(query: QueryMeetups): Promise<PaginatedResult<MeetupResponse>> {
     const result = await this.meetupsRepository.findAll(query);
     if (!result)
-      throw new HttpException('Requested content not found', HttpStatus.NOT_FOUND)
+      throw new HttpException(
+        'Requested content not found',
+        HttpStatus.NOT_FOUND,
+      );
     return result;
   }
 
   async findOne(id: number): Promise<MeetupResponse> {
     const result = await this.meetupsRepository.findById(id);
     if (!result)
-      throw new HttpException('Requested content not found', HttpStatus.NOT_FOUND)
+      throw new HttpException(
+        'Requested content not found',
+        HttpStatus.NOT_FOUND,
+      );
     return result;
   }
 
-  async update(id: number, updateMeetupDto: UpdateMeetupDto): Promise<MeetupResponse> {
+  async update(
+    id: number,
+    updateMeetupDto: UpdateMeetupDto,
+  ): Promise<MeetupResponse> {
     const result = await this.meetupsRepository.update(id, updateMeetupDto);
     if (!result)
-      throw new HttpException('Requested content not found', HttpStatus.NOT_FOUND)
+      throw new HttpException(
+        'Requested content not found',
+        HttpStatus.NOT_FOUND,
+      );
     return result;
-
   }
 
   async remove(id: number) {
-    const result = await this.meetupsRepository.delete(id)
+    const result = await this.meetupsRepository.delete(id);
     if (!result)
-      throw new HttpException('Requested content not found', HttpStatus.NOT_FOUND)
+      throw new HttpException(
+        'Requested content not found',
+        HttpStatus.NOT_FOUND,
+      );
     return result;
-
   }
 }

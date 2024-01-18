@@ -5,9 +5,8 @@ import { UserMeetupRepository } from './user-meetup.repository';
 import { PrismaModule } from '../modules/prisma/prisma.module';
 
 @Module({
-    imports: [PrismaModule],
-    controllers: [UserMeetupsController],
-    providers: [UserMeetupService, UserMeetupRepository]
+  imports: [PrismaModule],
+  controllers: [UserMeetupsController],
+  providers: [UserMeetupService, UserMeetupRepository],
 })
-export class UserMeetupModule {
-}
+export class UserMeetupModule {}

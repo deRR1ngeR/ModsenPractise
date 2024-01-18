@@ -1,6 +1,16 @@
 import {
-  Controller, Get, Post, Body, Patch, Param,
-  Delete, HttpCode, HttpStatus, UseGuards, Query, Req
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  UseGuards,
+  Query,
+  Req,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
@@ -19,23 +29,28 @@ import { QueryMeetups } from './dto/query-meetups.dto';
 @ApiTags('meetup')
 @Controller('meetup')
 export class MeetupsController {
-  constructor(private readonly meetupsService: MeetupsService) { }
+  constructor(private readonly meetupsService: MeetupsService) {}
 
   @ApiCreatedResponse({
-    type: MeetupResponse
+    type: MeetupResponse,
   })
   @Roles(Role.ORGANIZER)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @HttpCode(HttpStatus.CREATED)
   @Post()
-  create(@Body() createMeetupDto: CreateMeetupDto, @Req() req: RequestWithUser): Promise<MeetupResponse> {
+  create(
+    @Body() createMeetupDto: CreateMeetupDto,
+    @Req() req: RequestWithUser,
+  ): Promise<MeetupResponse> {
     return this.meetupsService.create(createMeetupDto, req.user.id);
   }
 
   @Roles(Role.ORGANIZER)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Get()
-  findAll(@Query() query: QueryMeetups): Promise<PaginatedResult<MeetupResponse>> {
+  findAll(
+    @Query() query: QueryMeetups,
+  ): Promise<PaginatedResult<MeetupResponse>> {
     return this.meetupsService.findAll(query);
   }
 
@@ -49,7 +64,10 @@ export class MeetupsController {
   @Roles(Role.ORGANIZER)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMeetupDto: UpdateMeetupDto): Promise<MeetupResponse> {
+  update(
+    @Param('id') id: string,
+    @Body() updateMeetupDto: UpdateMeetupDto,
+  ): Promise<MeetupResponse> {
     return this.meetupsService.update(+id, updateMeetupDto);
   }
 
