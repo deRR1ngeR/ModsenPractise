@@ -9,6 +9,6 @@ import { PrismaModule } from '../prisma/prisma.module';
   imports: [PrismaModule],
   controllers: [MeetupsController],
   providers: [MeetupsService, MeetupsRepository],
-  exports: [MeetupsService]
+  exports: [MeetupsService],
 })
-export class MeetupsModule { }
+export class MeetupsModule {}

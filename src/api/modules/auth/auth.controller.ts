@@ -1,4 +1,14 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, Req, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Req,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { AuthDto } from './dto/user-registration.dto';
@@ -11,29 +21,26 @@ import { LoginResponse } from './response/login.response';
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
+  constructor(private readonly authService: AuthService) {}
 
-    constructor(
-        private readonly authService: AuthService) { }
+  @UsePipes(new ValidationPipe())
+  @HttpCode(HttpStatus.CREATED)
+  @Post('register')
+  async register(@Body() dto: AuthDto) {
+    return await this.authService.registration(dto);
+  }
 
-    @UsePipes(new ValidationPipe())
-    @HttpCode(HttpStatus.CREATED)
-    @Post('register')
-    async register(@Body() dto: AuthDto) {
-        return await this.authService.registration(dto);
-    }
+  @UseGuards(LocalAuthGuard)
+  @UsePipes(new ValidationPipe())
+  @HttpCode(HttpStatus.ACCEPTED)
+  @Post('login')
+  async login(@Req() req: RequestWithUser): Promise<LoginResponse> {
+    return this.authService.login(req);
+  }
 
-    @UseGuards(LocalAuthGuard)
-    @UsePipes(new ValidationPipe())
-    @HttpCode(HttpStatus.ACCEPTED)
-    @Post('login')
-    async login(@Req() req: RequestWithUser): Promise<LoginResponse> {
-        return this.authService.login(req)
-    }
-
-    @UseGuards(RefreshGuard)
-    @Post('refresh')
-    async refresh(@Req() req: RequestWithUser) {
-        return this.authService.refresh(req);
-    }
-
+  @UseGuards(RefreshGuard)
+  @Post('refresh')
+  async refresh(@Req() req: RequestWithUser) {
+    return this.authService.refresh(req);
+  }
 }

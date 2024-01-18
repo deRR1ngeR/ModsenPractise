@@ -9,6 +9,14 @@ import { SessionsModule } from './modules/sessions/sessions.module';
 import { UserMeetupModule } from './userMeetup/user-meetup.module';
 
 @Module({
-    imports: [ConfigModule.forRoot(), MeetupsModule, PrismaModule, AuthModule, UsersModule, SessionsModule, UserMeetupModule]
+  imports: [
+    ConfigModule.forRoot(),
+    MeetupsModule,
+    PrismaModule,
+    AuthModule,
+    UsersModule,
+    SessionsModule,
+    UserMeetupModule,
+  ],
 })
-export class AppModule { }
+export class AppModule {}

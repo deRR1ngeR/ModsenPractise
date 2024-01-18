@@ -1,3 +1,3 @@
 export default interface ITokenPayload {
-    email: string
+  email: string;
 }
