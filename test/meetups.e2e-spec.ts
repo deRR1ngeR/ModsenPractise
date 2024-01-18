@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 
 import * as request from 'supertest';
-import { CreateMeetupDto } from '../api/modules/meetups/dto/create-meetup.dto';
-import { AppModule } from '../api/app.module';
+import { CreateMeetupDto } from '../src/api/modules/meetups/dto/create-meetup.dto';
+import { AppModule } from '../src/api/app.module';
 import { CreateUserDto } from 'src/api/modules/users/dto/create-user.dto';
 
 const loginDto: CreateUserDto = {
