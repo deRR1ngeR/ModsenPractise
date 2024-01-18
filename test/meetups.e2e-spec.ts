@@ -58,7 +58,7 @@ describe('AppController (e2e)', () => {
             .expect(401)
     });
 
-    it('/meetup/:id (PATCH) - success', async () => {
+    it('/meetup/:id (PATCH) - success ', async () => {
         return request(app.getHttpServer())
             .patch('/meetup/' + createdId)
             .set('Authorization', 'Bearer ' + token)
